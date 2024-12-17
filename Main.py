@@ -46,28 +46,28 @@ cap = cv2.VideoCapture(0)
 
 def detect_sign(lm_list):
     """ Detect signs based on landmarks. """
-    # Check for "Peace" sign (Index and Middle fingers up, others folded)
+    # Check for "victory" ✌ 
     if lm_list[8].y < lm_list[7].y and lm_list[12].y < lm_list[11].y:  # Index and middle fingers up
         if lm_list[16].y > lm_list[15].y and lm_list[20].y > lm_list[19].y:  # Ring and pinky folded
             return "Yes, we won."  # Peace sign detected
     
-    # Check for "I Love You" sign (Thumb, index, and pinky fingers up)
+    # Check for "I Love You" 🤟
     if lm_list[8].y < lm_list[7].y and lm_list[20].y < lm_list[19].y:  # Index and pinky fingers up
         if lm_list[12].y > lm_list[11].y and lm_list[16].y > lm_list[15].y:  # Middle and ring fingers down
             if lm_list[4].x < lm_list[3].x:  # Thumb extended (optional)
                 return "I love you!"
     
-    # Check for "Thumbs Up" (Thumb up, others folded)
+    # Check for "Like" 👍
     if lm_list[4].y < lm_list[3].y:  # Thumb up
         if lm_list[8].y > lm_list[6].y and lm_list[12].y > lm_list[10].y:  # Index and middle folded
             if lm_list[16].y > lm_list[14].y and lm_list[20].y > lm_list[18].y:  # Ring and pinky folded
                 return "Like!"  # Thumbs Up sign detected
-    
+    #check for Dislike 👎
     if lm_list[4].y > lm_list[3].y:  # Thumb pointing down
         if lm_list[8].y > lm_list[6].y and lm_list[12].y > lm_list[10].y and lm_list[16].y > lm_list[14].y and lm_list[20].y > lm_list[18].y:  # Other fingers folded down
             return "Dislike"
     
-    # Check for "Stop" gesture (All fingers straight up)
+    # Check for "Stop" ✋
     if lm_list[8].y < lm_list[6].y and lm_list[12].y < lm_list[10].y:  # Index and middle up
         if lm_list[16].y < lm_list[14].y and lm_list[20].y < lm_list[18].y:  # Ring and pinky up
             if lm_list[4].x < lm_list[3].x:  # Thumb extended
@@ -77,6 +77,11 @@ def detect_sign(lm_list):
     if lm_list[4].x - lm_list[8].x < 0.03 and lm_list[4].y - lm_list[8].y < 0.03:  # Thumb and index tips are close
         if lm_list[12].y < lm_list[10].y and lm_list[16].y < lm_list[14].y and lm_list[20].y < lm_list[18].y:  # Other fingers are stretched
             return "Perfect!"  # OK sign detected
+
+    # Check for "Fist" (👊) sign
+    if lm_list[4].y < lm_list[3].y and lm_list[8].y < lm_list[7].y and lm_list[12].y < lm_list[11].y and lm_list[16].y < lm_list[15].y and lm_list[20].y < lm_list[19].y:
+        # All fingers are curled down
+        return "Me or My self!"  # Fist sign detected
 
         
 
